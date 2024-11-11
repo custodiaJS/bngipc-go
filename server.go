@@ -10,16 +10,13 @@ import (
 )
 
 func acceptorGoroutine(ipcServerSocket *BngIpcServer, bgw *sync.WaitGroup) {
-	bgw.Add(1)
 	go func() {
-		// Es wird 10ms gewartet, dann wird signalisiert dass der Vorgang aktiv ist
-
 		// Es wird geprüft ob eine neue Verbindung verfügbar ist
 		conn, err := ipcServerSocket.listener.Accept()
 		if err != nil {
+			// Die Verbindung wird geupgradet
 
 		}
-
 	}()
 }
 
@@ -53,9 +50,6 @@ func SetupNewIpcServer(ipcSockName string, onNewProcess OnNewProcessFunction, on
 	// Das Akzeptieren neuer Prozesse wird gestartet
 	bgw := new(sync.WaitGroup)
 	acceptorGoroutine(ipcServerSocket, bgw)
-
-	// Es wird gewartet das der Vorgang erfolgreich war
-	bgw.Wait()
 
 	// Die Daten werden zurückgegeben
 	return ipcServerSocket, nil
